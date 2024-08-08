@@ -29,15 +29,14 @@ def get_artists_name_with_similar_work(request):
             # Decode the base64 string to binary data
             image_data = base64.b64decode(base64_string)
 
-            # Save the binary data to a file
-            with open("imageToSave.png", "wb") as fh:
-                fh.write(image_data)
+            # Create a BytesIO object from the binary data
+            image_io = io.BytesIO(image_data)
 
-            # Open the saved image with PIL
-            organ = PIL.Image.open("imageToSave.png")
+            # Open the image with PIL from the BytesIO object
+            img = PIL.Image.open(image_io)
 
             # Generate content using the image
-            response = model.generate_content(["Give me artist names with similar artworks for this image", organ])
+            response = model.generate_content(["Give me artist names with similar artworks for this image", img])
             response_text = response._result.candidates[0].content.parts[0].text
 
             # Extract artist names from the response using regex
