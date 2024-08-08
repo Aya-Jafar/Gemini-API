@@ -1,74 +1,53 @@
-# import os
-# from django.http import JsonResponse
-# from django.views.decorators.csrf import csrf_exempt
-# import google.generativeai as genai
-# import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import PIL.Image
+import google.generativeai as genai
+import io
+import re
+import base64
+import json
 
-# # Configure the API key
-# genai.configure(api_key="AIzaSyDROuVe8O5uxXpWe-n7BySIw9qt-3MZGpM")
-
-# @csrf_exempt
-# def chatbot(request):
-#     if request.method == 'POST':
-#         try:
-#             # Parse the request body to get the message
-#             body = json.loads(request.body.decode('utf-8'))
-#             message = body.get('message', '')
-
-#             if not message:
-#                 return JsonResponse({'error': 'Message is required'}, status=400)
-
-#             # Initialize the model
-#             model = genai.GenerativeModel('gemini-1.5-flash')
-#             chat = model.start_chat(history=[])
-
-#             # Send the message to the model
-#             response = chat.send_message(message)
-
-#             # Extract the response content
-#             answer = response._result.candidates[0].content.parts[0].text
-
-#             # Return the response as JSON
-#             return JsonResponse({'answer': answer}, status=200)
-
-#         except Exception as e:
-#             return JsonResponse({'error': str(e)}, status=500)
-
-#     return JsonResponse({'error': 'Invalid request method'}, status=400)
+# Initialize the model
+genai.configure(api_key="AIzaSyCaSmIPJ5GabW5hwsDDBmPyUFFiz6hmSnE")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 
-# import json
-# from channels.generic.websocket import AsyncWebsocketConsumer
-# import google.generativeai as genai
+@csrf_exempt
+def get_artists_name_with_similar_work(request):
+    if request.method == 'POST':
+        try:
+            # Parse the JSON body
+            data = json.loads(request.body)
+            base64_url = data.get('image_base64_url')
+            
+            if not base64_url:
+                return JsonResponse({'error': 'No image_base64_url provided'}, status=400)
 
-# genai.configure(api_key="AIzaSyDROuVe8O5uxXpWe-n7BySIw9qt-3MZGpM")
+            # Extract the base64 string from the URL
+            base64_string = base64_url.split(',')[1]
 
+            # Decode the base64 string to binary data
+            image_data = base64.b64decode(base64_string)
 
-# class ChatConsumer(AsyncWebsocketConsumer):
-#     async def connect(self):
-#         # Accept the connection
-#         await self.accept()
+            # Save the binary data to a file
+            with open("imageToSave.png", "wb") as fh:
+                fh.write(image_data)
 
-#         # Initialize the chat history
-#         self.history = []
+            # Open the saved image with PIL
+            organ = PIL.Image.open("imageToSave.png")
 
-#     async def receive(self, text_data):
-#         # Receive a message from the WebSocket
-#         text_data_json = json.loads(text_data)
-#         message = text_data_json.get('message', '')
+            # Generate content using the image
+            response = model.generate_content(["Give me artist names with similar artworks for this image", organ])
+            response_text = response._result.candidates[0].content.parts[0].text
 
-#         # Initialize the model with the current history
-#         model = genai.GenerativeModel('gemini-1.5-flash')
-#         chat = model.start_chat(history=self.history)
+            # Extract artist names from the response using regex
+            pattern = re.compile(r'\*\*([^\*]+?)\:\*\*')
+            artists = pattern.findall(response_text)
 
-#         # Send the message to the model
-#         response = chat.send_message(message)
-#         answer = response._result.candidates[0].content.parts[0].text
+            # Return extracted artist names as JSON
+            return JsonResponse({'artists': artists})
 
-#         # Update the history with the new message and response
-#         self.history.append({'user': message, 'bot': answer})
-
-#         # Send the explanation back to the WebSocket client
-#         await self.send(text_data=json.dumps({
-#             'answer': answer
-#         }))
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
