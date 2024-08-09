@@ -17,6 +17,40 @@ model = genai.GenerativeModel("gemini-1.5-flash")
 
 @csrf_exempt
 def get_artists_name_with_similar_work(request):
+    """
+    Handles POST requests to generate artist names with similar artworks based on the provided image.
+
+    This view function expects a POST request with a JSON payload containing a base64 encoded image URL. 
+    It decodes the image, uses a generative model to get artist names with similar artworks, and returns 
+    these names as a JSON response.
+
+    The JSON payload should have the following format:
+    {
+        "image_base64_url": "<base64_encoded_image>"
+    }
+
+    Example Request:
+    POST /get-artists/
+    Content-Type: application/json
+
+    {
+        "image_base64_url": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
+    }
+
+    Example Success Response:
+    {
+        "artists": [
+            "Antonio Canova - Known for his neoclassical style and sculptures of angels.",
+            "Bertel Thorvaldsen - Known for his neoclassical style and sculptures of mythological figures."
+        ]
+    }
+
+    HTTP Status Codes:
+        - 200 OK: Successfully processed the image and returned artist names.
+        - 400 Bad Request: No image_base64_url provided or other client-side errors.
+        - 405 Method Not Allowed: Invalid request method (only POST is allowed).
+        - 500 Internal Server Error: If an exception occurs during processing.
+    """
     if request.method == 'POST':
         try:
             # Parse the JSON body
