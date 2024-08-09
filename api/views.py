@@ -6,9 +6,12 @@ import io
 import re
 import base64
 import json
+from decouple import config
 
-# Initialize the model
-genai.configure(api_key="AIzaSyCaSmIPJ5GabW5hwsDDBmPyUFFiz6hmSnE")
+
+GEMINI_API_KEY = config('GEMINI_API_KEY')
+genai.configure(api_key=GEMINI_API_KEY)
+
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 
