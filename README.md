@@ -36,7 +36,7 @@ source env/bin/activate
 ##### On Windows:
 
 ```bash
-env\Scripts\activate
+source env\Scripts\activate
 ```
 
 ### 4. Install the Required Packages
