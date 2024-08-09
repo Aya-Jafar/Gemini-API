@@ -106,7 +106,7 @@ def request_api():
     # Check if the request was successful
     if response.status_code == 200:
         # Print the response JSON (artist names)
-        print("Artists:", response.json().get('artists'))
+        print("Artists:", response.json())
     else:
         # Print the error message
         print("Error:", response.json().get('error'))

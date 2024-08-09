@@ -39,10 +39,8 @@ def get_artists_name_with_similar_work(request):
             response = model.generate_content(["Give me artist names with similar artworks for this image", img])
             response_text = response._result.candidates[0].content.parts[0].text
 
-            # Extract artist names from the response using regex
-            pattern = re.compile(r'\*\*([^\*]+?)\:\*\*')
-            artists = pattern.findall(response_text)
-
+            # Extract artist names and descriptions
+            artists = response_text.replace("*","").split("\n")
             # Return extracted artist names as JSON
             return JsonResponse({'artists': artists})
 

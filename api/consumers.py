@@ -2,8 +2,8 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 import google.generativeai as genai 
 
+# TODO: Make .env file to put this key
 genai.configure(api_key="AIzaSyCZA6v3cKMcpaTUHWDnQO0P0fx1WGOfcHc")
-
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
