@@ -97,7 +97,8 @@ def request_api():
 
     # Create the JSON payload with the base64 URL
     payload = {
-        "image_base64_url": base64_url
+        "image_base64_url": base64_url,
+        "prompt":"Give me artist names with similar artworks for this image"
     }
 
     # Make the POST request to the Django endpoint

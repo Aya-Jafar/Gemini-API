@@ -56,6 +56,7 @@ def get_artists_name_with_similar_work(request):
             # Parse the JSON body
             data = json.loads(request.body)
             base64_url = data.get('image_base64_url')
+            prompt = data.get('prompt')
             
             if not base64_url:
                 return JsonResponse({'error': 'No image_base64_url provided'}, status=400)
@@ -73,7 +74,7 @@ def get_artists_name_with_similar_work(request):
             img = PIL.Image.open(image_io)
 
             # Generate content using the image
-            response = model.generate_content(["Give me artist names with similar artworks for this image", img])
+            response = model.generate_content([prompt, img])
             response_text = response._result.candidates[0].content.parts[0].text
 
             # Extract artist names and descriptions
