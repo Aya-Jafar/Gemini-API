@@ -71,7 +71,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # Set up generation configurations
             generation_config = genai.types.GenerationConfig(
                 candidate_count=1,  # Only one response candidate
-                max_output_tokens=40,  # Limit the response length
                 temperature=2.0,  # Control creativity (lower is less creative)
             )
 
