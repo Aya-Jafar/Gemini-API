@@ -22,24 +22,20 @@ def test_chatbot():
     print(response._result.candidates[0].content.parts[0].text)
 
 
-
-# Open the image file
-organ = PIL.Image.open("./test.jpg")
+image = PIL.Image.open("./test.jpg")
 
 def generate_text_from_image(image):
-    response = model.generate_content(["Give me artist names with similar artworks for this image", organ])
+    response = model.generate_content(["Give me artist names with similar artworks for this image", image])
     response = response._result.candidates[0].content.parts[0].text
 
 
     pattern = re.compile(r'\*\*([^\*]+?)\:\*\*')
     artists = pattern.findall(response)
 
-    # Print extracted artist names
     for artist in artists:
         print(artist)
 
-# generate_text_from_image(organ)
-
+# generate_text_from_image(image)
 
 
 # Open the image file and convert to base64
@@ -64,20 +60,18 @@ def generate_text_from_image(base64_url):
         fh.write(image_data)
 
 
-    organ = PIL.Image.open("./imageToSave.png")
+    image = PIL.Image.open("./imageToSave.png")
 
     # Generate content using the image base64 URL
-    response = model.generate_content(["Give me artist names with similar artworks for this image", organ])
+    response = model.generate_content(["Give me artist names with similar artworks for this image", image])
     response_text = response._result.candidates[0].content.parts[0].text
 
-    # Print response text
     print("Response Text:", response_text)
 
     # Extract artist names from the response
     pattern = re.compile(r'\*\*([^\*]+?)\:\*\*')
     artists = pattern.findall(response_text)
 
-    # Print extracted artist names
     for artist in artists:
         print(artist)
 
@@ -104,12 +98,9 @@ def request_api():
     # Make the POST request to the Django endpoint
     response = requests.post(url, json=payload)
 
-    # Check if the request was successful
     if response.status_code == 200:
-        # Print the response JSON (artist names)
         print("Artists:", response.json())
     else:
-        # Print the error message
         print("Error:", response.json().get('error'))
 
 

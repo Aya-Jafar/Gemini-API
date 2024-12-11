@@ -47,7 +47,10 @@ INSTALLED_APPS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3009",  # Replace with your front-end URL
+    "http://localhost:3000",  # Replace with your front-end URL
+    "http://localhost:3009",  
+    "https://ai-artistry-01.netlify.app"
+
 ]
 
 ASGI_APPLICATION = 'Gemini_API.asgi.application'
