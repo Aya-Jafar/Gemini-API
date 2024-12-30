@@ -21,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 from decouple import config
+import os
 
 # Load the Django secret key from the .env file
 SECRET_KEY = config('DJANGO_SECRET_KEY')
@@ -29,6 +30,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ["*","http://localhost:3009/"]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Application definition
