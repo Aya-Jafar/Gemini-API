@@ -8,6 +8,9 @@ import io
 import base64
 import requests
 
+# GEMINI_API_KEY = config('GEMINI_API_KEY')
+
+
 genai.configure(api_key="AIzaSyCaSmIPJ5GabW5hwsDDBmPyUFFiz6hmSnE")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
