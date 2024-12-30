@@ -85,7 +85,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Gemini_API.wsgi.application'
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Or RabbitMQ, etc.
 
 
 # Database
