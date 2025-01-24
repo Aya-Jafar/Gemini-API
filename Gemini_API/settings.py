@@ -25,6 +25,9 @@ from decouple import config
 
 # Load the Django secret key from the .env file
 SECRET_KEY = config('DJANGO_SECRET_KEY')
+REDDIS_URL = config('REDIS_URL')
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -59,7 +62,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": ["redis://default:eiKbVZJVZmAhgAQmcDXvjhwBmDhtvfIR@monorail.proxy.rlwy.net:32354"],
+            "hosts": [REDDIS_URL],
         },
     },
 }

@@ -1,3 +1,3 @@
-web: daphne daphne Gemini_API.asgi.asgi:channel_layer --port 8000 --bind 0.0.0.0 -v2
+web: uvicorn Gemini_API.asgi:application --host 0.0.0.0 --port 8000 --workers 4
 worker: python manage.py runworker -v2
 celery: celery -A Gemini_API.settings worker -l info
