@@ -7,11 +7,13 @@ import PIL
 import io
 import base64
 import requests
+from decouple import config
 
-# GEMINI_API_KEY = config('GEMINI_API_KEY')
+
+GEMINI_API_KEY = config('GEMINI_API_KEY')
 
 
-genai.configure(api_key="AIzaSyCaSmIPJ5GabW5hwsDDBmPyUFFiz6hmSnE")
+genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 
@@ -83,7 +85,7 @@ def generate_text_from_image(base64_url):
 
 def request_api():
     # Define the URL of the Django endpoint
-    url = "http://localhost:8000/get-artists/"
+    url = "https://web-production-e553f.up.railway.app/get-artists/"
 
     # Load an image and encode it to base64
     image_path = "test.jpg"
