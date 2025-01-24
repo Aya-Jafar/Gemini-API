@@ -35,6 +35,7 @@ application = ProtocolTypeRouter({
         )
     ),
 
+
     "channel": ChannelNameRouter({
         "chat": ChatConsumer.as_asgi(),
     }),

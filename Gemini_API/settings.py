@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,6 +54,16 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ASGI_APPLICATION = 'Gemini_API.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ["redis://default:eiKbVZJVZmAhgAQmcDXvjhwBmDhtvfIR@monorail.proxy.rlwy.net:32354"],
+        },
+    },
+}
+
 
 
 MIDDLEWARE = [

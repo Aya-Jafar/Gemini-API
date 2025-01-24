@@ -101,7 +101,7 @@ def request_api():
     }
 
     # Make the POST request to the Django endpoint
-    response = requests.post(url, json=payload)
+    response = requests.post(url, json=payload, verify=False)
 
     if response.status_code == 200:
         print("Artists:", response.json())
