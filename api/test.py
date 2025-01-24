@@ -26,6 +26,7 @@ def test_chatbot():
 
     print(response._result.candidates[0].content.parts[0].text)
 
+# test_chatbot()
 
 image = PIL.Image.open("./test.jpg")
 
