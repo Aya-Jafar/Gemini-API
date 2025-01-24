@@ -1,6 +1,7 @@
 amqp==5.3.1
 annotated-types==0.7.0
 asgiref==3.8.1
+async-timeout==5.0.1
 attrs==24.3.0
 autobahn==24.4.2
 Automat==24.8.1
@@ -10,6 +11,7 @@ celery==5.4.0
 certifi==2024.12.14
 cffi==1.17.1
 channels==4.2.0
+channels_redis==4.2.1
 charset-normalizer==3.4.1
 click==8.1.8
 click-didyoumean==0.3.1
@@ -35,6 +37,7 @@ hyperlink==21.0.0
 idna==3.10
 incremental==24.7.2
 kombu==5.4.2
+msgpack==1.1.0
 pillow==11.0.0
 prompt_toolkit==3.0.48
 proto-plus==1.25.0
@@ -48,6 +51,7 @@ pyOpenSSL==24.3.0
 pyparsing==3.2.0
 python-dateutil==2.9.0.post0
 python-decouple==3.8
+redis==5.2.1
 requests==2.32.3
 rsa==4.9
 service-identity==24.2.0
